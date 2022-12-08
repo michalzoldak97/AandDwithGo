@@ -3,8 +3,22 @@ package main
 import (
 	"fmt"
 
+	adapter "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Adapter"
 	plane "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Bridge"
 )
+
+func runAdapterExample() {
+	u := &adapter.User{}
+	dellDisplay := &adapter.DPDisplay{}
+	acerDisplay := &adapter.DVIDisplay{}
+
+	dviDpAdapter := &adapter.DVIAdapter{
+		DviDisplay: acerDisplay,
+	}
+
+	u.PlugInDisplayPortIntoDisplay(dellDisplay)
+	u.PlugInDisplayPortIntoDisplay(dviDpAdapter)
+}
 
 func runBridgeExample() {
 	aesaRadar := &plane.AESA{}
@@ -22,5 +36,7 @@ func runBridgeExample() {
 
 func main() {
 	fmt.Println("Structural design patterns")
+
+	runAdapterExample()
 	runBridgeExample()
 }
