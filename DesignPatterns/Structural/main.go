@@ -5,7 +5,16 @@ import (
 
 	adapter "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Adapter"
 	plane "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Bridge"
+	composite "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Composite"
 )
+
+func runCompositeExamle() {
+	s := &composite.School{}
+	s.CreateClasses()
+	nameToSearch := "Lin"
+	hasName, name := s.SearchName(nameToSearch)
+	fmt.Printf("There is name %v\n full is %v\n", hasName, name)
+}
 
 func runAdapterExample() {
 	u := &adapter.User{}
@@ -39,4 +48,5 @@ func main() {
 
 	runAdapterExample()
 	runBridgeExample()
+	runCompositeExamle()
 }
