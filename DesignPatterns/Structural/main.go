@@ -6,7 +6,24 @@ import (
 	adapter "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Adapter"
 	plane "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Bridge"
 	composite "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Composite"
+	decorator "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Decorator"
 )
+
+func runDecoratorExample() {
+	suv := &decorator.Car{}
+	suv.SetPrice(198000)
+
+	suvWithTurbo := &decorator.Turbo{}
+	suvWithTurbo.SetBaseOffer(suv)
+
+	suvWithTurboAndAwd := &decorator.Awd{}
+	suvWithTurboAndAwd.SetBaseOffer(suvWithTurbo)
+
+	suvFullUpgrade := &decorator.PerformanceTires{}
+	suvFullUpgrade.SetBaseOffer(suvWithTurboAndAwd)
+
+	fmt.Printf("Base SUV price is %v\nwith turbo it will be %v\nwith all upgrades (AWD and performance tires) it will be %v\n", suv.GetOffer(), suvWithTurbo.GetOffer(), suvFullUpgrade.GetOffer())
+}
 
 func runCompositeExamle() {
 	s := &composite.School{}
@@ -49,4 +66,5 @@ func main() {
 	runAdapterExample()
 	runBridgeExample()
 	runCompositeExamle()
+	runDecoratorExample()
 }
