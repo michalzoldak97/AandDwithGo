@@ -1,4 +1,4 @@
-package plane
+package bridge
 
 type Plane interface {
 	SetRadar(Radar)

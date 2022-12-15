@@ -1,4 +1,4 @@
-package plane
+package bridge
 
 type Radar interface {
 	Start()

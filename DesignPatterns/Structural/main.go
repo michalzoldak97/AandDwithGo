@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 
-	adapter "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Adapter"
-	plane "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Bridge"
-	composite "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Composite"
-	decorator "github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/Decorator"
+	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/adapter"
+	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/bridge"
+	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/composite"
+	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/decorator"
 )
 
 func runDecoratorExample() {
@@ -16,11 +16,11 @@ func runDecoratorExample() {
 	suvWithTurbo := &decorator.Turbo{}
 	suvWithTurbo.SetBaseOffer(suv)
 
-	suvWithTurboAndAwd := &decorator.Awd{}
-	suvWithTurboAndAwd.SetBaseOffer(suvWithTurbo)
+	suvWithTurboAndAWD := &decorator.AWD{}
+	suvWithTurboAndAWD.SetBaseOffer(suvWithTurbo)
 
 	suvFullUpgrade := &decorator.PerformanceTires{}
-	suvFullUpgrade.SetBaseOffer(suvWithTurboAndAwd)
+	suvFullUpgrade.SetBaseOffer(suvWithTurboAndAWD)
 
 	fmt.Printf("Base SUV price is %v\nwith turbo it will be %v\nwith all upgrades (AWD and performance tires) it will be %v\n", suv.GetOffer(), suvWithTurbo.GetOffer(), suvFullUpgrade.GetOffer())
 }
@@ -47,13 +47,13 @@ func runAdapterExample() {
 }
 
 func runBridgeExample() {
-	aesaRadar := &plane.AESA{}
-	parRadar := &plane.PAR{}
+	aesaRadar := &bridge.AESA{}
+	parRadar := &bridge.PAR{}
 
-	f16 := &plane.Interceptor{}
+	f16 := &bridge.Interceptor{}
 	f16.SetRadar(aesaRadar)
 
-	b1 := &plane.Bomber{}
+	b1 := &bridge.Bomber{}
 	b1.SetRadar(parRadar)
 
 	f16.StartRadar()
