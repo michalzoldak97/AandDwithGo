@@ -2,12 +2,23 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/adapter"
 	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/bridge"
 	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/composite"
 	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/decorator"
+	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/facade"
 )
+
+func runFacadeExample() {
+	wm, err := facade.NewWashingMachine()
+	if err != nil {
+		log.Fatalf("Error %v", err)
+	}
+	wm.StartWashingMachine()
+	wm.StopWashingMachine()
+}
 
 func runDecoratorExample() {
 	suv := &decorator.Car{}
@@ -67,4 +78,5 @@ func main() {
 	runBridgeExample()
 	runCompositeExamle()
 	runDecoratorExample()
+	runFacadeExample()
 }

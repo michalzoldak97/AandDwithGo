@@ -12,7 +12,7 @@ type School struct {
 }
 
 func readStudentNames() []string {
-	f, err := os.Open("Composite/data/names.txt")
+	f, err := os.Open("composite/data/names.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
