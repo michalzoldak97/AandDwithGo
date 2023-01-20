@@ -9,7 +9,24 @@ import (
 	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/composite"
 	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/decorator"
 	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/facade"
+	"github.com/michalzoldak97/AandDwithGo/DesignPatterns/Structural/proxy"
 )
+
+func runProxyExample() {
+	dbConn := proxy.NewDBServer(111)
+	all := 0
+	for i := 0; i < 10; i++ {
+		res, err := dbConn.RunQuery("SELECT")
+		if err != nil {
+			fmt.Println("Error: ", err)
+			break
+		}
+
+		all += res
+	}
+
+	fmt.Printf("Finished with %v\n", all)
+}
 
 func runFacadeExample() {
 	wm, err := facade.NewWashingMachine()
@@ -79,4 +96,5 @@ func main() {
 	runCompositeExamle()
 	runDecoratorExample()
 	runFacadeExample()
+	runProxyExample()
 }
