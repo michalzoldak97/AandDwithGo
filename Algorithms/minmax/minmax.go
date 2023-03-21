@@ -1,7 +1,11 @@
 package minmax
 
+import (
+	"runtime"
+)
+
 func FindNaive(nums []int) (int, int) {
-	min, max := 0, 0
+	min, max := nums[0], nums[0]
 
 	for _, num := range nums {
 		if num < min {
@@ -18,7 +22,7 @@ func FindNaive(nums []int) (int, int) {
 }
 
 func findMax(nums []int, res chan int) {
-	max := 0
+	max := nums[0]
 
 	for _, num := range nums {
 		if num > max {
@@ -30,7 +34,7 @@ func findMax(nums []int, res chan int) {
 }
 
 func findMin(nums []int, res chan int) {
-	min := 0
+	min := nums[0]
 
 	for _, num := range nums {
 		if num < min {
@@ -98,4 +102,42 @@ func FindOptim(nums []int) (int, int) {
 	}
 
 	return min, max
+}
+
+func FindNaiveCPU(nums []int) (int, int) {
+	nSize := len(nums)
+	cores := runtime.NumCPU()
+
+	if nSize < cores {
+		return FindNaive(nums)
+	}
+
+	step := nSize / (cores / 2)
+	mod := nSize % cores
+
+	minMaxChan := make(chan int, cores)
+	defer close(minMaxChan)
+
+	results := make([]int, (cores + mod))
+
+	for i := 0; i < (cores / 2); i++ {
+		go findMin(nums[(i*step):((step+i*step)-1)], minMaxChan)
+		go findMax(nums[(i*step):((step+i*step)-1)], minMaxChan)
+	}
+
+	for i := 0; i < cores; i++ {
+		results[i] = <-minMaxChan
+	}
+
+	if mod == 0 {
+		return FindNaive(results)
+	}
+
+	mIdx := 1
+	for i := cores; i < (cores + mod); i++ {
+		results[i] = nums[(nSize - mIdx)]
+		mIdx++
+	}
+
+	return FindNaive(results)
 }
