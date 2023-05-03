@@ -61,6 +61,14 @@ func newShop() shop {
 			name:   "Roll",
 			amount: 24,
 			price:  1.19,
+		}, {
+			name:   "Cake",
+			amount: 8,
+			price:  18.99,
+		}, {
+			name:   "Doughnut",
+			amount: 7,
+			price:  3.11,
 		}}, "alko": {{
 			name:   "Harnas",
 			amount: 999,
@@ -73,6 +81,32 @@ func newShop() shop {
 			name:   "Johny Walker",
 			amount: 6,
 			price:  119.88,
-		}}},
+		}}, "dairy": {{
+			name:   "Butter",
+			amount: 31,
+			price:  500.99,
+		}, {
+			name:   "Milk",
+			amount: 72,
+			price:  4.17,
+		}, {
+			name:   "Monte",
+			amount: 12,
+			price:  13.90,
+		}, {
+			name:   "Kefir",
+			amount: 6,
+			price:  7.88,
+		},
+		}, "tools": {{
+			name:   "Glebogryzarka",
+			amount: 1,
+			price:  1785.33,
+		}, {
+			name:   "Klucz do glebogryzarki",
+			amount: 1,
+			price:  .99,
+		},
+		}},
 	}
 }
