@@ -1,5 +1,7 @@
 package main
 
+import "strings"
+
 type product struct {
 	name   string
 	amount int
@@ -23,9 +25,11 @@ func (s *shop) getSections() []string {
 }
 
 func (s *shop) getProduct(pname string) (bool, product) {
+	searchPName := strings.ToLower(pname)
+
 	for section := range s.products {
 		for _, prod := range s.products[section] {
-			if prod.name == pname {
+			if strings.ToLower(prod.name) == searchPName {
 				return true, prod
 			}
 		}

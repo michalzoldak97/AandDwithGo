@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 )
@@ -12,7 +13,7 @@ import (
 var order *product
 
 func listCommands() {
-	fmt.Println("commands -> lists all available commands\ncategories -> lists all categories\ncategory {{category}} -> lists all products in category\norder {{product}} x {{amount}} -> create order\npay {{cash amount}} -> pay for order")
+	fmt.Println("commands -> lists all available commands\ncategories -> lists all categories\ncategory {{category}} -> lists all products in category\norder {{amount}} x {{product}} -> create order\npay {{cash amount}} -> pay for order")
 }
 
 func payForOrder(s *shop, cash float64) {
@@ -31,7 +32,8 @@ func payForOrder(s *shop, cash float64) {
 		log.Fatal("Someting is not yes, failure")
 	}
 
-	fmt.Printf("Heres your %v of %v and the change is %v\n", order.amount, order.name, fmt.Sprintf("%.2f", cash-order.price))
+	fmt.Printf("Heres your %v x %v and the change is %v\n", order.amount, order.name,
+		fmt.Sprintf("%.2f", cash-order.price))
 
 	order = nil
 }
@@ -67,8 +69,8 @@ func createOrder(s *shop, p string, a int) {
 	}
 
 	order = &product{
-		name:   p,
-		amount: a,
+		name:   prod.name,
+		amount: prod.amount,
 		price:  prod.price * float64(a),
 	}
 
@@ -78,8 +80,7 @@ func createOrder(s *shop, p string, a int) {
 func isOrderQuery(phrase string) bool {
 	f := strings.Fields(phrase)
 
-	if len(f) != 4 ||
-		f[0] != "order" ||
+	if f[0] != "order" ||
 		f[1] == "" ||
 		f[2] != "x" ||
 		f[3] == "" {
@@ -136,7 +137,9 @@ func runShop(s *shop, c string) {
 				break
 			}
 
-			createOrder(s, f[1], a) // TODO: name instead of f[1]
+			n := strings.Join(f[3:], " ")
+
+			createOrder(s, n, a)
 		}
 	case isPayQuery(c):
 		{
@@ -165,6 +168,7 @@ func runShop(s *shop, c string) {
 func handleInput(s *shop) {
 	fmt.Println("Welcome!")
 	reader := bufio.NewReader(os.Stdin)
+	runtimeName := runtime.GOOS
 
 	for {
 		fmt.Print("-> ")
@@ -174,7 +178,12 @@ func handleInput(s *shop) {
 			fmt.Println("Error: ", err)
 		}
 
-		txt = strings.Replace(txt, "\r\n", "", -1)
+		if runtimeName == "windows" {
+			txt = strings.Replace(txt, "\r\n", "", -1)
+		} else if runtimeName == "linux" {
+			txt = strings.Replace(txt, "\n", "", -1)
+		}
+
 		runShop(s, txt)
 	}
 }
