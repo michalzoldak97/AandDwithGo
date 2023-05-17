@@ -13,7 +13,7 @@ import (
 var order *product
 
 func listCommands() {
-	fmt.Println("commands -> lists all available commands\ncategories -> lists all categories\ncategory {{category}} -> lists all products in category\norder {{amount}} x {{product}} -> create order\npay {{cash amount}} -> pay for order")
+	fmt.Println("commands -> lists all available commands\ncategories -> lists all categories\ncategory {{category}} -> lists all products in category\norder {{amount}} x {{product}} -> create order\npay {{cash amount}} -> pay for order\nq -> exit shop")
 }
 
 func payForOrder(s *shop, cash float64) {
@@ -70,7 +70,7 @@ func createOrder(s *shop, p string, a int) {
 
 	order = &product{
 		name:   prod.name,
-		amount: prod.amount,
+		amount: a,
 		price:  prod.price * float64(a),
 	}
 
